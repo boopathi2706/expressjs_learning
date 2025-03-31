@@ -1,0 +1,74 @@
+1) ROUTE:
+---------
+Case 1:
+-------
+        // the user enter in route / or index.html ....the server show the index.html file ....how it possible 
+        // solution is using regular expression ^-starting point   $-endding point
+        // ans:
+        -------
+
+        app.get("^/$|index.html" ,(req,res)=>{
+        })
+
+Case 2:
+-------
+      // user enter only index not for index.html means how to redirect
+      //solution using ()?
+      //ans:
+      -----
+      app.get("^/$|index(.html)?",(req,res)=>{
+      })
+
+      ()?->this means inside parathese all are optionals
+
+
+Case 3:
+-------
+      //user know old directory name ex....our webside old directory name is old-page but we modify new name for that directory
+      //how to redirect the para
+      //solution using redirect function
+      >> using status code also 301 this parmant to change direactory 302 temprary to change derictory
+      ans:
+      ----
+      app.get("^/$|"old-page(.html)?",(req,res)=>{
+        res.redirect(301,"new.page.html");
+      })
+
+
+Case 4:
+-------
+      // user write any one ...show 404 page means 
+      //using /* its means /and type any 
+      ans:
+      ----
+      app.get("/*",(req,res)=>{
+        res.sendfile(path.join(__dirname,"filename"));
+      });
+
+
+Route handling:
+---------------
+ the route handling totaly two way is simple and chain method:
+ handling using doing multiple work in sigle time
+
+ 1---> app.get("/handling(.html)?",(req,res,next)=>{
+    clg("content");
+    next();
+ },(req,res)=>{
+    res.send();
+ })
+
+
+ 2--> const one=(req,res,next)=>{
+    clg("");
+    next()
+ }
+ const two=(req,res,next)=>{
+    clg("");
+    next()
+ }
+ const three=(req,res)=>{
+    clg("finish");
+    
+ }
+ app.get("/chain.html",[one,two,three]);

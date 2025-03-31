@@ -1,0 +1,40 @@
+//middle ware is totaly 3 type
+1-->build middle ware
+2--->custom middle ware
+3--->third party middle ware
+
+Middleware is like a helper function that runs before your main route. It helps with things like checking login, reading data, or handling errors. 🚀
+
+
+build Middleware:
+-----------------
+app.use(express.urlencoded({extended:false}));
+// this is used for take data from our form 
+
+app.use(express.json());
+//handle json datas
+
+app.use(express.static(path.join(__dirname,"./public")));
+//access all static file example we handle only html file not css image or data.txt file so these file are 
+//contain public folder that folder to alcate to static file
+
+
+custom Middleware:
+------------------
+
+app.use((req,res,next)=>{
+    logEvent(`${req.method}\t${req.headers.origin}\t${req.url}`,"reqLog.txt");
+    console.log(`${req.method}\t${req.headers.origin}\t${req.url}`);
+    next();
+})
+
+
+third party Middleware:
+-----------------------
+
+cors ---->its is third party Middleware its using any website get req for our website its is darangers
+
+
+
+
+
