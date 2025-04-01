@@ -1,0 +1,10 @@
+it is called mini-app
+because:
+    file structure->
+           view:
+               sub(flo)->index.html
+               data.index.html
+only we handle the route /data.html only ..not working /sub/index.html
+this is using that purpase
+
+

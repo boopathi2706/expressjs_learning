@@ -6,14 +6,11 @@ const logEvent=require("./middleware/logEvents.js");
 const errHandle=require("./middleware/errorHandle.js");
 
 //custom middleware
-
 app.use((req,res,next)=>{
     logEvent(`${req.method}\t${req.headers.origin}\t${req.url}`,"reqLog.txt");
     console.log(`${req.method}\t${req.headers.origin}\t${req.url}`);
     next();
 })
-
-
 
 //build middleware
 
@@ -21,16 +18,15 @@ app.use(express.urlencoded({extended:false}));
 // this is used for take data from our form 
 app.use(express.json());
 //handle json datas
-app.use(express.static(path.join(__dirname,"./public")));
+app.use('/',express.static(path.join(__dirname,"./public")));
+app.use('/sub',express.static(path.join(__dirname,"./public")));
 //access all static file example we handle only html file not css image or data.txt file so these file are 
 //contain public folder that folder to alcate to static file
 
 
-
-
-
-
-
+//express rounting mini-app
+app.use("/sub",require("./Router/subdir"));
+app.use("/",require("./Router/root"));
 
 
 //send only content 
@@ -40,26 +36,10 @@ app.get("/content",(req,res)=>{
 
 
 // send complete html or react file
-app.get("/",(req,res)=>{
-    res.sendFile(path.join(__dirname,'view','main.html'));
+// app.get("/",(req,res)=>{
+//     res.sendFile(path.join(__dirname,'view','main.html'));
 
-})
-
-//case 1 and case 2 (important note refer):
-app.get("^/$|/index(.html)?",(req,res)=>{
-    res.sendFile(path.join(__dirname,'view','main.html'));
-
-})
-
-//case 3:(refer text file)
-app.get("/old-page(.html)?",(req,res)=>{
-    res.redirect(301,"/new");
-})
-//case 4:(refer text file)
-// app.get("/*",(req,res)=>{
-//     res.status(404).sendFile(path.join(__dirname,"view","error_404.html"));
 // })
-
 
 
 //route handling
@@ -86,15 +66,6 @@ app.get("/handling(.html)?",(req,res,next)=>{
  }
  app.get("/chain(.html)?",[one ,two,three]);
 
-
-
-app.get("/new",(req,res)=>{
-    res.sendFile(path.join(__dirname,'view','new-page.html'));
-})
-
-app.get("/*",(req,res)=>{
-    res.status(404).sendFile(path.join(__dirname,"view","error_404.html"));
-})
 // its is same for 404 error handle but it handle all type get post ...etc...
 app.all('*', (req, res) =>{ 
     res.status(404); 
