@@ -1,0 +1,13 @@
+API-application programmig interface
+
+api used for transfer the data between the client to server
+
+rest API is one  of  the API 
+ operation is :
+ 1-->GET(read)
+ 2-->PUT(update)
+ 3-->POST(write)
+ 4-->DELETE(delete)
+
+
+ request---(header(who),body,method,message);

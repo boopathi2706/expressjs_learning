@@ -24,6 +24,10 @@ app.use('/sub',express.static(path.join(__dirname,"./public")));
 //contain public folder that folder to alcate to static file
 
 
+//API USED
+app.use("/employees",require("./API/employee.js"));
+
+
 //express rounting mini-app
 app.use("/sub",require("./Router/subdir"));
 app.use("/",require("./Router/root"));
